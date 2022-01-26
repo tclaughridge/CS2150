@@ -1,0 +1,31 @@
+C007 000 	jmp
+001E 001 	size
+0001 002 	one
+3000 003 	loit
+0000 004 	i
+0004 005 	four
+0000 006 	zero
+3001 007 	load size		if i >= size, goto xit <-loop
+6004 008 	sub i
+D01E 009 	jmpe xit
+E01E 00A	jmpl xit
+3005 00B	load four 		if i = four goto xit2
+6004 00C	sub  i
+D017 00D 	jmpe xit2
+3003 00E 	load loit		form instruction
+5004 00F 	add i
+4011 010	store doit 		plant instruction
+0000 011 	doit
+1800 012	print
+3004 013 	load i 			i += 1
+5002 014	add one
+4004 015	store i
+C007 016	jmp loop
+B000 017	xit2
+3006 018	load zero
+1800 019	print
+3004 01A 	load i 			i += 1
+5002 01B	add one
+4004 01C	store i
+C007 01D 	jmp loop
+B000 01E 	

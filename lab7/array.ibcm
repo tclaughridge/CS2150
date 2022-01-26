@@ -1,0 +1,67 @@
+C00A 000		jmp 	start 	comments
+0000 001 size 	dw		0 		int size
+0000 002 zero	dw		0       
+0001 003 one 	dw 		1 		
+4000 004 stoit  dw		4000
+0045 005 a 		dw 		25 		int a[] <-- put array at end
+0000 006 i 		dw		0  		int i
+0000 007 j 		dw		0 		int j
+0000 008 k 		dw		0 		int k
+0000 009
+1000 00A start	readH			read array size
+4001 00B		store 	size
+B000 00C 		nop
+3002 00D		load 	0 		i, j = 0;
+4006 00E		store	i
+4007 00F 		store 	j
+3001 010 		load 	size	k = size - 1
+4008 011 		store 	k 		
+3008 012		load 	k
+6003 013 		sub		one
+4008 014 		store 	k
+3001 015 loop	load	size	if (i >= size) goto xit
+6006 016 		sub		i
+E023 017		jmpl	xit
+D023 018		jmpe	xit
+3004 019		load	stoit	form the instruction to store a[i]
+5005 01A		add		a
+5006 01B		add 	i
+401E 01C		store	doit	plant the instruction
+1000 01D		readH
+0000 01E doit	store	a[i]
+3006 01F 		load 	i 		i += 1
+5003 020 		add 	one
+4006 021 		store 	i
+C015 022 		jmp 	loop	goto loop
+B000 023 xit	nop
+3000 024 loit	dw      3000
+B000 025 		nop
+3001 026 loop 	load	size 	if (j >= size) goto xit
+6007 027 		sub 	j
+E034 028 		jmpl	xit
+D034 029 		jmpe	xit
+3024 02A 		load 	loit	form the instruction to load a[j]
+5005 02B		add		a
+5007 02C		add 	j
+402E 02D		store 	doit	plant the instruction
+0000 02E doit	load 	a[j]
+1800 02F 		printH
+3007 030 		load 	j 		j += 1
+5003 031 		add 	one
+4007 032 		store 	j
+C026 033 		jmp 	loop 	goto loop
+B000 034 xit	nop
+B000 035 		nop
+3008 036 loop 	load	k 	if (k < 0) goto xit
+E042 037 		jmpl	xit
+3024 038 		load 	loit	form the instruction to load a[k]
+5005 039		add		a
+5008 03A		add 	k
+403C 03B		store 	doit	plant the instruction
+0000 03C doit	load 	a[k]
+1800 03D 		printH
+3008 03E 		load 	k 		k -= 1
+6003 03F 		sub 	one
+4008 040 		store 	k
+C036 041 		jmp 	loop 	goto loop
+0000 042 xit	nop

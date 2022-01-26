@@ -1,0 +1,31 @@
+C00A 000  		 jmp	start	comments
+0000 001 a       dw		0 		int a
+0000 002 b       dw		0  		int b
+0000 003 c       dw		0 		int c
+0000 004 sum     dw		0 		int sum
+0000 005
+0000 006
+3004 007 loop	load	sum		set sum to 0
+6004 008		sub		sum
+4004 009		store	sum
+1000 00A 		readH			read a
+4001 00B		store	a
+1000 00C		readH			read b
+4002 00D		store	b
+1000 00E		readH			read c
+4003 00F		store   c
+3004 010 		load	sum		s = a + b + c
+5001 011		add		a
+5002 012		add		b0
+5003 013		add		c
+1800 014		printH			print sum
+4004 015		store	sum
+D018 016		jmpe	xit		if (s == 0) goto xit
+C007 017		jmp 	loop	goto loop
+3001 018 xit	load	a 		print a
+1800 019		printH
+3002 01A		load	b  		print b
+1800 01B		printH
+3003 01C		load	c  		print c
+1800 01D 		printH
+0000 01E		halt			halt

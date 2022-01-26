@@ -1,0 +1,118 @@
+C019 000 		jmp
+000A 001 size	dw
+0000 002 k		dw
+0000 003 i 		dw
+0009 004 j 		dw
+000E 005 a 		dw
+0000 006 temp 	dw
+4000 007 stoit 	dw
+3000 008 loit 	dw
+6000 009 suit 	dw
+0001 00A one	dw
+0000 00B l 		dw
+0000 00C
+0000 00D 
+0000 00E a[0] \
+0000 00F a[1]  |
+0000 010 a[2]  |
+0000 011 a[3]  |
+0000 012 a[4]  |-- a
+0000 013 a[5]  | 
+0000 014 a[6]  |
+0000 015 a[7]  |
+0000 016 a[8]  |
+0000 017 a[9] /
+B000 018
+B000 019 
+3001 01A 		load size, if k >= size xit
+6002 01B		sub k
+D028 01C		jmpe xit
+E028 01D		jmpl xit
+3007 01E 		load stoit, form instr. to store a[k]
+5005 01F 		add a
+5002 020 		add k
+4023 021 		store instr.
+1000 022 		readH
+0000 023 		store a[k]
+3002 024		load k, k++
+500A 025 		add one
+4002 026		store k
+C01A 027 		jmp loop
+B000 028 		xit
+B000 029
+B000 02A
+3001 02B loop-i load size, if i >= size xit-i
+6003 02C 		sub i
+D065 02D 		jmpe xit-i
+E065 02E		jmpl xit-i
+3004 02F loop-j load j, if i >= j xit-j
+6003 030 		sub i 		
+D060 031 		jmpe xit-j
+E060 032  		jmpl xit-j
+3008 033 if 	load loit, form instr. to load a[j-1]
+5005 034		add a
+5004 035		add j
+600A 036		sub one
+403C 037		store instr.
+3009 038		load suit, form instr. to sub a[j]
+5005 039		add a
+5004 03A		add j
+403D 03B		store instr.
+0000 03C		load a[j-1], if a[j] >= a[j-1] skip
+0000 03D		sub a[j]
+D05A 03E		jmpe skip
+E05A 03F		jmpl skip
+3008 040 *skip	load loit, form instr. to load a[j]				
+5005 041 *		add a
+5004 042 *	 	add j
+4044 043 *		store instr.
+0000 044 *		load a[j]	
+4006 045 *		store temp
+B000 046 *		
+B000 047 *
+3007 048 *		load stoit, form instr. to store a[j] 
+5005 049 *		add a
+5004 04A * 		add j
+4052 04B * 		store instr.
+4008 04C * 		load loit, form instr. to load a[j-1]
+5005 04D *		add a
+5004 04E * 		add j
+600A 04F * 		sub one
+4051 050 *		store instr.
+0000 051 * 		load a[j-1]
+0000 052 * 		store a[j]
+3007 053 *		load stoit, form instr. to store a[j-1]
+5005 054 * 		add a
+5004 055 * 		add j
+600A 056 * 		sub one
+4059 057 * 		store instr.
+3006 058 *		load temp
+0000 059 * 		store a[j-1]
+B000 05A *skip	
+B000 05B
+3004 05C 		load j, j--
+600A 05D		sub one
+4004 05E		store j
+C02F 05F 		goto loop-j
+B000 060 xit-j
+3003 061		load i, i++
+500A 062		add one
+4003 063		store i
+C02B 064		goto loop-i
+B000 065 xit-i
+B000 066
+3001 067 		load size, if l >= size goto xit
+600B 068 		sub l
+D07F 069		jmpe xit
+E07F 06A		jmpl xit
+0000 06B		load loit, form instr. to load a[l]
+5005 06C		add a
+500B 06D		add l
+306F 06E		store a[l]
+0000 06F		load a[l]
+1800 070 		printH
+300B 07A 		load l, l++
+500A 07B		add one
+400B 07C		store l
+C067 07E 		goto loop
+0000 07F xit 	halt
